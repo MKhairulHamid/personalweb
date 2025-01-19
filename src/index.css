@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply antialiased;
+  }
+}
+
+@layer components {
+  .nav-link {
+    @apply px-4 py-2 rounded-lg transition-colors;
+  }
+  
+  .nav-link-scrolled {
+    @apply hover:bg-indigo-100 text-indigo-600;
+  }
+  
+  .nav-link-top {
+    @apply text-white hover:bg-white/10;
+  }
+}
