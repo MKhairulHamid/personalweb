@@ -11,54 +11,66 @@ export const profileData = {
       ]
     },
     experience: [
-      {
-        title: ".NET Full Stack Engineer",
-        company: "Liven Group",
-        period: "Sep 2024 - Present",
-        location: "Melbourne, Australia (Remote)",
-        points: [
-          "Developed a global loyalty program platform serving malls and brands across international locations.",
-          "Built scalable solutions using C# and .NET Core for high-traffic enterprise applications.",
-          "Enhanced system performance through cloud-based architectures and microservices implementation.",
-          "Collaborated with a team of developers to modernize legacy systems and implement new features."
-        ]
-      },
-      {
-        title: "Senior Software Engineer",
-        company: "Bipo Service",
-        period: "Jun 2022 - Aug 2024",
-        location: "Singapore (Remote)",
-        points: [
-          "Designed and implemented enterprise-grade software features for Human Capital Management and Global Payroll Outsourcing.",
-          "Developed microservices to automate critical HR workflows serving multinational clients.",
-          "Collaborated with cross-functional teams to deliver customized solutions for enterprise clients.",
-          "Improved system performance through optimization and refactoring."
-        ]
-      },
-      {
-        title: "Software Developer",
-        company: "Boogie Medical",
-        period: "Mar 2021 - May 2022",
-        location: "Jakarta, Indonesia",
-        points: [
-          "Modernized business processes for a medical startup, achieving increase in sales.",
-          "Integrated legacy systems into contemporary web applications, ensuring smooth transitions.",
-          "Delivered business-aligned technical solutions by engaging with key stakeholders."
-        ]
-      },
-      {
-        title: "Mobile Developer",
-        company: "PT Telkom Indonesia",
-        period: "Jun 2020 - Feb 2021",
-        location: "Remote",
-        points: [
-          "Created scalable mobile solutions for Indonesia's agricultural sector, ensuring usability for diverse user groups.",
-          "Enhanced operational efficiency by integrating advanced digital platforms.",
-          "Developed and maintained mobile applications serving thousands of users.",
-          "Implemented offline-first functionality for rural users with limited connectivity."
-        ]
-      }
-    ],
+        {
+          title: ".NET Full Stack Engineer",
+          company: "Liven Group",
+          period: "Sep 2024 - Present",
+          location: "Melbourne, Australia (Remote)",
+          points: [
+            "Developed a global loyalty program platform serving malls and brands across international locations.",
+            "Built scalable solutions using C# and .NET Core for high-traffic enterprise applications.",
+            "Enhanced system performance through cloud-based architectures and microservices implementation.",
+            "Collaborated with a team of developers to modernize legacy systems and implement new features."
+          ]
+        },
+        {
+          title: "Senior Software Engineer",
+          company: "Bipo Service",
+          period: "Jun 2022 - Aug 2024",
+          location: "Singapore (Remote)",
+          points: [
+            "Designed and implemented enterprise-grade software features for Human Capital Management and Global Payroll Outsourcing.",
+            "Developed microservices to automate critical HR workflows serving multinational clients.",
+            "Collaborated with cross-functional teams to deliver customized solutions for enterprise clients.",
+            "Improved system performance through optimization and refactoring."
+          ]
+        },
+        {
+          title: "Software Developer",
+          company: "Boogie Medical",
+          period: "Mar 2021 - May 2022",
+          location: "Jakarta, Indonesia",
+          points: [
+            "Modernized business processes for a medical startup, achieving increase in sales.",
+            "Integrated legacy systems into contemporary web applications, ensuring smooth transitions.",
+            "Delivered business-aligned technical solutions by engaging with key stakeholders."
+          ]
+        },
+        {
+          title: "Mobile Developer",
+          company: "Telkom Indonesia",
+          period: "Jun 2020 - Feb 2021",
+          location: "Remote",
+          points: [
+            "Created scalable mobile solutions for Indonesia's agricultural sector, ensuring usability for diverse user groups.",
+            "Enhanced operational efficiency by integrating advanced digital platforms.",
+            "Developed and maintained mobile applications serving thousands of users.",
+            "Implemented offline-first functionality for rural users with limited connectivity."
+          ]
+        },
+        {
+          title: "System Analyst",
+          company: "Boogie Apparel",
+          period: "Jan 2019 - May 2020",
+          location: "Jakarta, Indonesia",
+          points: [
+            "Leveraged technical and analytical skills to drive digital business transformation.",
+            "Designed and implemented a professional business website integrated with CRM and digital marketing strategies.",
+            "Streamlined sales operations and optimized workflows to enhance customer engagement.",
+            "Gained expertise in systems analysis, integration, process automation, and user-focused solutions."
+          ]
+        }
+      ],      
     education: {
       degrees: [
         {
