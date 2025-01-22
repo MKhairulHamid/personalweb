@@ -1,30 +1,32 @@
 // components.js
-import React, { useState, useEffect } from 'react';
-import { 
-  Mail, 
-  Linkedin, 
-  Github, 
-  ChevronDown, 
-  Download, 
-  ExternalLink, 
+import React, { useState, useEffect } from "react";
+import {
+  Mail,
+  Linkedin,
+  Github,
+  ChevronDown,
+  Download,
+  ExternalLink,
   Calendar,
-  MapPin
-} from 'lucide-react';
-import { profileData } from '../config/profileData';
-import '../styles/index.css'
-
+  MapPin,
+  Menu,
+  X,
+} from "lucide-react";
+import { Link } from "react-router-dom";
+import { profileData } from "../config/profileData";
+import "../styles/index.css";
 
 const Card = ({ className = "", children }) => (
-  <div className={`bg-white rounded-lg shadow-md p-6 transition-all duration-300 hover:shadow-lg ${className}`}>
+  <div
+    className={`bg-white rounded-lg shadow-md p-6 transition-all duration-300 hover:shadow-lg ${className}`}
+  >
     {children}
   </div>
 );
 
 export const Section = ({ id, className = "", children }) => (
   <section id={id} className={`py-20 ${className}`}>
-    <div className="max-w-6xl mx-auto px-4">
-      {children}
-    </div>
+    <div className="max-w-6xl mx-auto px-4">{children}</div>
   </section>
 );
 
@@ -45,11 +47,15 @@ export const SkillTag = ({ color, children }) => {
     blue: "bg-blue-100 text-blue-800",
     green: "bg-green-100 text-green-800",
     purple: "bg-purple-100 text-purple-800",
-    pink: "bg-pink-100 text-pink-800"
+    pink: "bg-pink-100 text-pink-800",
   };
 
   return (
-    <span className={`px-4 py-2 rounded-full ${colorClasses[color] || colorClasses.blue}`}>
+    <span
+      className={`px-4 py-2 rounded-full ${
+        colorClasses[color] || colorClasses.blue
+      }`}
+    >
       {children}
     </span>
   );
@@ -57,42 +63,92 @@ export const SkillTag = ({ color, children }) => {
 
 export const Header = ({ name }) => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollToSection = (sectionId) => {
-    const element = document.getElementById(sectionId);
-    element?.scrollIntoView({ behavior: 'smooth' });
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
   };
 
+  const navigationLinks = [
+    { name: "Group Quiz", path: "/personalweb/group-quiz" },
+  ];
+
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      isScrolled ? 'bg-white/90 backdrop-blur-sm shadow-md' : 'bg-transparent'
-    }`}>
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled
+          ? "bg-white/90 backdrop-blur-sm shadow-md"
+          : "bg-white/5 backdrop-blur-sm"
+      }`}
+    >
       <div className="max-w-6xl mx-auto px-4 py-4">
         <div className="flex justify-between items-center">
-          <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 text-transparent bg-clip-text">
+          <Link
+            to="/personalweb"
+            className={`text-2xl font-bold ${
+              isScrolled
+                ? "bg-gradient-to-r from-blue-600 to-purple-600 text-transparent bg-clip-text"
+                : "text-white"
+            }`}
+          >
             {name}
-          </h1>
-          <nav className="flex gap-4">
-            {['about', 'experience', 'education', 'skills', 'projects', 'certifications'].map((section) => (
-              <button
-                key={section}
-                onClick={() => scrollToSection(section)}
-                className={`nav-link ${isScrolled ? 'nav-link-scrolled' : 'nav-link-top'}`}
+          </Link>
+
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex gap-4">
+            {navigationLinks.map((link) => (
+              <Link
+                key={link.path}
+                to={link.path}
+                className={`nav-link px-4 py-2 rounded-md transition-colors ${
+                  isScrolled
+                    ? "text-gray-700 hover:bg-gray-100"
+                    : "text-white hover:bg-white/20 font-medium"
+                }`}
               >
-                {section.charAt(0).toUpperCase() + section.slice(1)}
-              </button>
+                {link.name}
+              </Link>
             ))}
           </nav>
+
+          {/* Mobile Menu Button */}
+          <button
+            className={`md:hidden p-2 rounded-md ${
+              isScrolled
+                ? "hover:bg-gray-100 text-gray-700"
+                : "hover:bg-white/20 text-white"
+            }`}
+            onClick={toggleMenu}
+            aria-label="Toggle menu"
+          >
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
         </div>
+
+        {/* Mobile Navigation */}
+        {isMenuOpen && (
+          <nav className="md:hidden mt-4 py-2 px-4 bg-white rounded-md shadow-lg">
+            {navigationLinks.map((link) => (
+              <Link
+                key={link.path}
+                to={link.path}
+                className="block py-2 px-4 text-gray-700 hover:bg-gray-100 rounded-md"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {link.name}
+              </Link>
+            ))}
+          </nav>
+        )}
       </div>
     </header>
   );
@@ -109,14 +165,14 @@ export const Hero = ({ name, role, tagline, email, location, social }) => (
           {location}
         </p>
         <div className="flex justify-center gap-4 flex-wrap">
-          <a 
+          <a
             href={`mailto:${email}`}
             className="flex items-center gap-2 px-6 py-3 bg-white text-indigo-600 rounded-lg hover:bg-indigo-50 transition-colors"
           >
             <Mail size={20} />
             Contact Me
           </a>
-          <a 
+          <a
             href={social.linkedin}
             target="_blank"
             rel="noopener noreferrer"
@@ -125,7 +181,7 @@ export const Hero = ({ name, role, tagline, email, location, social }) => (
             <Linkedin size={20} />
             LinkedIn
           </a>
-          <a 
+          <a
             href={social.github}
             target="_blank"
             rel="noopener noreferrer"
@@ -134,8 +190,8 @@ export const Hero = ({ name, role, tagline, email, location, social }) => (
             <Github size={20} />
             GitHub
           </a>
-          <a 
-            href="/resume.pdf" 
+          <a
+            href="/resume.pdf"
             download
             className="flex items-center gap-2 px-6 py-3 bg-indigo-700 text-white rounded-lg hover:bg-indigo-800 transition-colors"
           >
@@ -146,10 +202,14 @@ export const Hero = ({ name, role, tagline, email, location, social }) => (
       </div>
     </div>
     <div className="flex justify-center mt-16">
-      <ChevronDown 
-        size={40} 
-        className="text-white animate-bounce cursor-pointer" 
-        onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
+      <ChevronDown
+        size={40}
+        className="text-white animate-bounce cursor-pointer"
+        onClick={() =>
+          document
+            .getElementById("about")
+            ?.scrollIntoView({ behavior: "smooth" })
+        }
       />
     </div>
   </section>
@@ -169,7 +229,10 @@ export const About = ({ about }) => (
 );
 
 export const Experience = ({ experience }) => (
-  <Section id="experience" className="bg-gradient-to-br from-purple-50 to-pink-50">
+  <Section
+    id="experience"
+    className="bg-gradient-to-br from-purple-50 to-pink-50"
+  >
     <SectionTitle>Experience</SectionTitle>
     <div className="space-y-6">
       {experience.map((job, index) => (
@@ -177,7 +240,9 @@ export const Experience = ({ experience }) => (
           <h4 className="text-xl font-semibold text-gray-900 mb-2">
             {job.title} - {job.company}
           </h4>
-          <p className="text-purple-600 mb-4">{job.period} | {job.location}</p>
+          <p className="text-purple-600 mb-4">
+            {job.period} | {job.location}
+          </p>
           <ul className="space-y-2">
             {job.points.map((point, idx) => (
               <li key={idx} className="flex items-start">
@@ -198,7 +263,9 @@ export const Skills = ({ skills }) => (
     <div className="grid md:grid-cols-2 gap-6">
       {skills.map((category, index) => (
         <ProjectCard key={index}>
-          <h4 className="text-xl font-semibold text-gray-900 mb-4">{category.title}</h4>
+          <h4 className="text-xl font-semibold text-gray-900 mb-4">
+            {category.title}
+          </h4>
           <div className="flex flex-wrap gap-2">
             {category.skills.map((skill, idx) => (
               <SkillTag key={idx} color={category.color}>
@@ -213,21 +280,28 @@ export const Skills = ({ skills }) => (
 );
 
 export const Projects = ({ projects }) => (
-  <Section id="projects" className="bg-gradient-to-br from-indigo-50 to-blue-50">
+  <Section
+    id="projects"
+    className="bg-gradient-to-br from-indigo-50 to-blue-50"
+  >
     <SectionTitle>Featured Projects</SectionTitle>
     <div className="grid md:grid-cols-2 gap-6">
       {projects.map((project, index) => (
         <ProjectCard key={index}>
-          <h4 className="text-xl font-semibold text-gray-900 mb-4">{project.title}</h4>
+          <h4 className="text-xl font-semibold text-gray-900 mb-4">
+            {project.title}
+          </h4>
           <p className="text-gray-600 mb-6">{project.description}</p>
           <div className="flex flex-wrap gap-2 mb-4">
             {project.tech.map((tech, idx) => (
-              <SkillTag key={idx} color="blue">{tech}</SkillTag>
+              <SkillTag key={idx} color="blue">
+                {tech}
+              </SkillTag>
             ))}
           </div>
           <div className="flex gap-4">
             {project.url && (
-              <a 
+              <a
                 href={project.url}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -245,22 +319,27 @@ export const Projects = ({ projects }) => (
 );
 
 export const Certifications = ({ certifications }) => (
-  <Section id="certifications" className="bg-gradient-to-br from-green-50 to-blue-50">
+  <Section
+    id="certifications"
+    className="bg-gradient-to-br from-green-50 to-blue-50"
+  >
     <SectionTitle>Professional Certifications</SectionTitle>
     <div className="grid md:grid-cols-2 gap-6">
       {certifications.map((cert, index) => (
         <ProjectCard key={index}>
           <div className="flex items-start justify-between">
             <div>
-              <h4 className="text-xl font-semibold text-gray-900 mb-2">{cert.title}</h4>
+              <h4 className="text-xl font-semibold text-gray-900 mb-2">
+                {cert.title}
+              </h4>
               <p className="text-gray-600 mb-2">{cert.issuer}</p>
               <p className="text-green-600 text-sm mb-4 flex items-center">
                 <Calendar size={16} className="mr-2" />
                 {cert.date}
               </p>
-              <a 
-                href={cert.link} 
-                target="_blank" 
+              <a
+                href={cert.link}
+                target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center text-blue-600 hover:text-blue-800"
               >
@@ -269,8 +348,8 @@ export const Certifications = ({ certifications }) => (
               </a>
             </div>
             {cert.badge && (
-              <img 
-                src={cert.badge} 
+              <img
+                src={cert.badge}
                 alt={`${cert.title} badge`}
                 className="w-40 h-40 object-contain"
               />
@@ -288,14 +367,14 @@ export const Footer = ({ name, email, social }) => (
       <div className="text-center">
         <h4 className="text-2xl font-bold mb-4">Let's Connect</h4>
         <div className="flex justify-center gap-4 mb-8">
-          <a 
+          <a
             href={`mailto:${email}`}
             className="hover:text-indigo-300 transition-colors"
             aria-label="Email"
           >
             <Mail size={24} />
           </a>
-          <a 
+          <a
             href={social.linkedin}
             target="_blank"
             rel="noopener noreferrer"
@@ -304,7 +383,7 @@ export const Footer = ({ name, email, social }) => (
           >
             <Linkedin size={24} />
           </a>
-          <a 
+          <a
             href={social.github}
             target="_blank"
             rel="noopener noreferrer"
@@ -314,7 +393,9 @@ export const Footer = ({ name, email, social }) => (
             <Github size={24} />
           </a>
         </div>
-        <p className="text-indigo-200">&copy; {new Date().getFullYear()} {name}. All rights reserved.</p>
+        <p className="text-indigo-200">
+          &copy; {new Date().getFullYear()} {name}. All rights reserved.
+        </p>
       </div>
     </div>
   </footer>
@@ -325,9 +406,9 @@ const Home = () => {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 antialiased">
       <div className="flex flex-col min-h-screen">
         <Header name={profileData.name} />
-        
+
         <main className="flex-grow">
-          <Hero 
+          <Hero
             name={profileData.name}
             role={profileData.role}
             tagline={profileData.tagline}
@@ -336,28 +417,18 @@ const Home = () => {
             social={profileData.social}
           />
 
-          <About 
-            about={profileData.about} 
-          />
+          <About about={profileData.about} />
 
-          <Experience 
-            experience={profileData.experience} 
-          />
+          <Experience experience={profileData.experience} />
 
-          <Skills 
-            skills={profileData.skills} 
-          />
+          <Skills skills={profileData.skills} />
 
-          <Projects 
-            projects={profileData.projects} 
-          />
+          <Projects projects={profileData.projects} />
 
-          <Certifications 
-            certifications={profileData.certifications} 
-          />
+          <Certifications certifications={profileData.certifications} />
         </main>
 
-        <Footer 
+        <Footer
           name={profileData.name}
           email={profileData.email}
           social={profileData.social}
